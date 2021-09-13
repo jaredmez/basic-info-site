@@ -1,0 +1,26 @@
+{
+  "name": "info-site",
+  "version": "1.0.0",
+  "description": "Practice setting up a server.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jaredmez/basic-info-site.git"
+  },
+  "keywords": [
+    "node.js",
+    "basic-site"
+  ],
+  "author": "jaredmez",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jaredmez/basic-info-site/issues"
+  },
+  "homepage": "https://github.com/jaredmez/basic-info-site#readme",
+  "devDependencies": {
+    "nodemon": "^2.0.12"
+  }
+}
