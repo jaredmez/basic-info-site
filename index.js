@@ -4,32 +4,33 @@ const paths = require('path');
 
 const server = http.createServer((req, res) => {
 
-    if (req.url === '/about') {
-        fs.readFile(`./${req.url}.html`, (err, content) => {
-            if(err) throw err;
-            res.end(content);
-        })
-    }
-    else if (req.url === '/') {
-        fs.readFile(`./index.html`, (err, content) => {
-            if(err) throw err;
-            res.end(content);
-        })
+    let filePath = paths.join(
+        __dirname,
+        "source/",
+         req.url == '/' ? 'index.html' : `${req.url}.html`);
+    let contentType = 'text/html';
+
+    if (paths.extname(req.url) == '.css') {
+        filePath = paths.join(__dirname,'source/styles', 'style.css');
+        contentType = 'text/css';
     }
 
-    else if (req.url === '/contact-me') {
-        fs.readFile(`./${req.url}.html`, (err, content) => {
-            if(err) throw err;
+    fs.readFile(filePath, (err, content) => {
+        if (err) {
+            if (err.code == 'ENOENT') {
+                fs.readFile(paths.join(__dirname, 'source/', '404.html'), (err, content) => {
+                    res.writeHead(200, {'Content-Type': contentType});
+                    res.end(content);
+                });
+            } else {
+                res.writeHead(500);
+                res.end(`Server Error: ${err.code}`);
+            }
+        } else {
+            res.writeHead(200, {'Content-Type': contentType});
             res.end(content);
-        })
-    }
-
-    else {
-        fs.readFile(`./404.html`, (err, content) => {
-            if(err) throw err;
-            res.end(content);
-        })
-    }
+        }
+    })
 })
 
 server.listen(3000, () => {
